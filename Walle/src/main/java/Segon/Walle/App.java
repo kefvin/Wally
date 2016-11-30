@@ -25,16 +25,33 @@ public class App
     	
     	String linia;
     	int total = 0;
+    	int guarda = 0;
     	
+    	try{
     	while((linia = br.readLine()) != null){
     		
-			buscar(linia);
-			// if compta > 1 || total > 1
+			int compta = buscar(linia);
+			guarda += compta;
+			
+			if (guarda > 1){
+				throw new FitxerIncorrecteException();
+			}else{
+				total += guarda;
+			}
 			
 		}
+    	
+    	System.out.println("Imprimir la fila y la columna en la que aparece Wally ");
+    	
+    	}catch (Exception e){
+    		System.out.println(e);
+    	}catch (FitxerIncorrecteException fie){
+    		System.out.println(fie.massaWally());
+    	}
     }
     
-	private static void buscar(String linia) {
+	private static int buscar(String linia) throws FitxerIncorrecteException {
+		// Con esa expresión aceptaría -Wally- y no debería comprobar excepciones de caracteres especiales
 		String find = "\\W"+CADENAATROBAR+"\\W";
 		
 		//Matcher es donde buscar y pattern es la expresión regular que busco
@@ -46,8 +63,8 @@ public class App
 		while(m.find()){
 			compta++;
 		}
-		// return compta
 		
 		// Si hay más de 1 match FITXER INCORRECTE
+		return compta;
 	}
 }
