@@ -4,6 +4,6 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consectetur,
  nec, pulvinar at nisi. Nunc in mi nec libero porttitor convallis. Curabitur dignissim
  urna ut nulla mattis sagittis. Vivamus efficitur felis tristique enim tempor eleifend.
  Vestibulum a massa consectetur, malesuada tortor sit amet, consectetur
- dolor. Wally Praesent posuere lectus vel odio luctus, a eleifend lacus vestibulum.
+ dolor. Wally Wally Praesent posuere lectus vel odio luctus, a eleifend lacus vestibulum.
  Nam malesuada aliquam erat nec condimentum. Proin id augue eget est
  pellentesque viverra sit amet et odio. Interdum.

@@ -13,57 +13,71 @@ import java.util.regex.Pattern;
  * Hello world!
  *
  */
-public class App 
-{
+public class App {
 	private final static String CADENAATROBAR = "Wally";
-    public static void main( String[] args )throws IOException
-    {
-    	// expresión regular a usar = \WWally\W
-    	
-    	BufferedReader br = new BufferedReader( new InputStreamReader(
-    			App.class.getResource("text.txt").openStream()));
-    	
-    	String linia;
-    	int total = 0;
-    	int guarda = 0;
-    	
-    	try{
-    	while((linia = br.readLine()) != null){
-    		
-			int compta = buscar(linia);
-			guarda += compta;
-			
-			if (guarda > 1){
-				throw new FitxerIncorrecteException();
-			}else{
-				total += guarda;
-			}
-			
-		}
-    	
-    	System.out.println("Imprimir la fila y la columna en la que aparece Wally ");
-    	
-    	}catch (Exception e){
-    		System.out.println(e);
-    	}catch (FitxerIncorrecteException fie){
-    		System.out.println(fie.massaWally());
-    	}
-    }
-    
-	private static int buscar(String linia) throws FitxerIncorrecteException {
-		// Con esa expresión aceptaría -Wally- y no debería comprobar excepciones de caracteres especiales
-		String find = "\\W"+CADENAATROBAR+"\\W";
+	private static int fila = 0;
+	private static int columna = 0;
+
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(App.class.getResource("/text.txt").openStream()));
 		
-		//Matcher es donde buscar y pattern es la expresión regular que busco
+		// expresión regular a usar = [.,\\\s]Wally[.,\\\s]|Wally
+
+				String linia;
+				int total = 0;
+				int guarda = 0;
+				int comptaFiles = 0;
+
+				try {
+					while ((linia = br.readLine()) != null) {
+
+						if (guarda > 1) {
+							throw new FitxerIncorrecteException();
+						} else {
+							total += guarda;
+							fila = comptaFiles;
+						}
+						
+						int compta = buscar(linia);
+						guarda += compta;
+						comptaFiles++;
+					}
+					if(guarda == 0){
+						throw new noHiHaWallyException();
+					}else{
+						System.out.println("En Wally és a la línia "+ fila +" columna "+ columna);
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (FitxerIncorrecteException e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.massaWally());
+				} catch (noHiHaWallyException e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.zeroWally());
+				}
+
+	}
+
+	private static int buscar(String linia) throws FitxerIncorrecteException {
+		// Con esa expresión aceptaría -Wally- y no debería comprobar
+		// excepciones de caracteres especiales
+		String find = "[.,\\s\\S]" + CADENAATROBAR + "[.,\\s]|Wally";
+
+		// Matcher es donde buscar y pattern es la expresión regular que busco
 		Pattern p = Pattern.compile(find);
 		Matcher m = p.matcher(linia);
-		
-		int compta = 0; 
-		
-		while(m.find()){
+
+		int compta = 0;
+
+		while (m.find()) {
+			String trobat = m.group(0);
+			columna = linia.indexOf(trobat);
 			compta++;
 		}
-		
+
 		// Si hay más de 1 match FITXER INCORRECTE
 		return compta;
 	}
